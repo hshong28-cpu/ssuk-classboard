@@ -42,7 +42,7 @@ async function sendResetEmail(event) {
   const button = form.querySelector("button[type=submit]");
   button.disabled = true;
   try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+    const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: "https://hshong28-cpu.github.io/ssuk-classboard/" });
     if (error) throw error;
     showMessage("재설정 메일을 보냈습니다. 메일의 링크를 눌러 새 비밀번호를 입력하세요.", false);
   } catch (error) {
