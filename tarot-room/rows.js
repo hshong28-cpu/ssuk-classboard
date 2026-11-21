@@ -6,15 +6,17 @@ function layoutDeckRows(){
  fan.classList.add('rows-spread');
  const pad=16,full=Math.max(200,cloth.clientWidth-pad*2),mobile=full<560;
  const cw=mobile?Math.min(54,Math.round(full/5.8)):Math.min(82,Math.round(full/10.5)),ch=Math.round(cw*1.64);
- const side=Math.round(cw*0.35),W=full-side*2; // room for the tilted edge cards
- const maxAngle=mobile?16:20,curve=Math.round(ch*(mobile?0.16:0.2));
- const minStep=mobile?20:30;let rows=2,cols,step;
- for(rows=2;rows<=12;rows++){cols=Math.ceil(n/rows);step=(W-cw)/(cols-1);if(step>=minStep)break;}
- const rowGap=Math.round(ch*(mobile?0.6:0.56));
- cards.forEach((c,i)=>{const r=Math.floor(i/cols),k=i%cols,inRow=Math.min(cols,n-r*cols),rowStep=inRow>1?Math.min(step,(W-cw)/(inRow-1)):0,rowW=cw+rowStep*(inRow-1),x=pad+side+(W-rowW)/2+k*rowStep;
-  const t=inRow>1?k/(inRow-1)*2-1:0,spread=rowW/W; // -1..1 across the row; shorter rows fan less
-  const angle=t*maxAngle*spread,y=pad+r*rowGap+curve*spread*t*t;
-  c.style.setProperty('--rx',x.toFixed(1)+'px');c.style.setProperty('--ry',y.toFixed(1)+'px');c.style.setProperty('--rr',angle.toFixed(2)+'deg');c.style.setProperty('--rw',cw+'px');c.style.setProperty('--rh',ch+'px');c.style.setProperty('--rz',String(r*100+k));});
+ // Gather each row toward the centre: a true radial fan around a pivot below the row.
+ const fanW=Math.round(full*(mobile?0.9:0.8)),maxAngle=(mobile?22:26)*Math.PI/180;
+ const minStep=mobile?18:26;let rows=2,cols;
+ for(rows=2;rows<=12;rows++){cols=Math.ceil(n/rows);if((fanW-cw)/(cols-1)>=minStep)break;}
+ const R=(fanW-cw)/2/Math.sin(maxAngle),sag=R*(1-Math.cos(maxAngle));
+ const rowGap=Math.round(ch*(mobile?0.5:0.46)+sag*0.55),cx=pad+full/2;
+ cards.forEach((c,i)=>{const r=Math.floor(i/cols),k=i%cols,inRow=Math.min(cols,n-r*cols);
+  const span=maxAngle*(inRow-1)/(cols-1||1),a=inRow>1?-span+2*span*k/(inRow-1):0;
+  const x=cx+R*Math.sin(a)-cw/2,y=pad+r*rowGap+R*(1-Math.cos(a));
+  c.style.setProperty('--rx',x.toFixed(1)+'px');c.style.setProperty('--ry',y.toFixed(1)+'px');c.style.setProperty('--rr',(a*180/Math.PI).toFixed(2)+'deg');c.style.setProperty('--rw',cw+'px');c.style.setProperty('--rh',ch+'px');c.style.setProperty('--rz',String(r*100+k));});
+ const curve=Math.round(sag);
  fan.style.setProperty('--rows-h',(pad*2+(rows-1)*rowGap+ch+curve+Math.round(cw*0.25))+'px');
 }
 document.addEventListener('DOMContentLoaded',()=>{
