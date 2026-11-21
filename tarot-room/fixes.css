@@ -65,10 +65,23 @@
 /* All 78 cards visible at once (rows.js) */
 .physical-deck-scroll:has(#deck-fan.rows-spread){overflow:hidden;mask-image:none;cursor:default}
 #deck-fan.rows-spread{width:100%!important;max-width:none!important;height:var(--rows-h)!important;margin:0!important}
-#deck-fan.rows-spread .fan-card,#deck-fan.rows-spread .fan-card:hover,#deck-fan.rows-spread .fan-card:active,#deck-fan.rows-spread .fan-card:focus{position:absolute!important;left:var(--rx)!important;top:var(--ry)!important;width:var(--rw)!important;height:var(--rh)!important;transform:rotate(var(--rr,0deg))!important;transform-origin:50% 100%!important;translate:none!important;scale:1!important;margin:0!important;z-index:var(--rz)!important;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease!important;animation:none!important;border-radius:6px}
-#deck-fan.rows-spread .fan-card.is-hovered,#deck-fan.rows-spread .fan-card:focus-visible{transform:rotate(var(--rr,0deg)) translateY(-14px)!important;z-index:5000!important;filter:brightness(1.15);box-shadow:0 14px 22px #0009,0 0 0 2px #e7c88d}
+#deck-fan.rows-spread .fan-card,#deck-fan.rows-spread .fan-card:hover,#deck-fan.rows-spread .fan-card:active,#deck-fan.rows-spread .fan-card:focus{position:absolute!important;left:var(--rx)!important;top:var(--ry)!important;width:var(--rw)!important;height:var(--rh)!important;--rot:var(--rr,0deg);transform:translate(var(--tx),var(--ty)) rotate(var(--rot))!important;transform-origin:50% 100%!important;translate:none!important;scale:1!important;margin:0!important;z-index:var(--rz)!important;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease!important;animation:none!important;border-radius:6px}
+#deck-fan.rows-spread .fan-card.is-hovered,#deck-fan.rows-spread .fan-card:focus-visible{transform:translate(var(--tx),var(--ty)) rotate(var(--rot)) translateY(-14px)!important;z-index:5000!important;filter:brightness(1.15);box-shadow:0 14px 22px #0009,0 0 0 2px #e7c88d}
 #deck-fan.rows-spread .fan-card:disabled{opacity:.12!important}
-#deck-fan.rows-spread.laying-cards .fan-card{animation:rows-in .35s ease both!important;animation-delay:calc(var(--fan-order) * 6ms)!important}
-@keyframes rows-in{from{opacity:0;transform:rotate(0deg) translateY(10px)}to{opacity:1;transform:rotate(var(--rr,0deg))}}
+/* Deal like the film: each row starts as a stack on the left, the hand sweeps right and every new card lands on top of the previous one. */
+#deck-fan.rows-spread.laying-cards .fan-card{animation:sweep-in .28s cubic-bezier(.2,.7,.2,1) backwards!important;animation-delay:calc(var(--deal) * 14ms)!important}
+@property --tx{syntax:'<length>';inherits:false;initial-value:0px}
+@property --ty{syntax:'<length>';inherits:false;initial-value:0px}
+@property --rot{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes sweep-in{from{--tx:var(--dx);--ty:var(--dy);--rot:var(--r0)}to{--tx:0px;--ty:0px;--rot:var(--rr)}}
 @media (prefers-reduced-motion:reduce){#deck-fan.rows-spread .fan-card{animation:none!important;transition:none!important}}
 .physical-deck-scroll:has(#deck-fan.rows-spread){padding-bottom:8px!important}
+
+/* Darker room */
+body.compact-app{background:linear-gradient(#07050dcc,#0b0814f0),var(--parlour-art) center/cover fixed!important}
+@media (max-width:640px){body.compact-app{background-attachment:scroll!important}}
+.compact-app .hero-header{background:#0d0a15e6!important}
+.app-select,.intake-topic-select{background-color:#1a1324!important}
+.compact-app .observation-well{background:linear-gradient(#0c0811ee,#09060ff2),var(--parlour-art) center 75%/cover!important}
+.compact-app [aria-labelledby=setup-heading],.compact-app .conversation-room,.compact-app .studio-panel{background:#120d19f2!important}
+@media (prefers-reduced-motion:reduce){#deck-fan.rows-spread.laying-cards .fan-card{animation:none!important}}

@@ -12,11 +12,13 @@ function layoutDeckRows(){
  for(rows=2;rows<=12;rows++){cols=Math.ceil(n/rows);if((fanW-cw)/(cols-1)>=minStep)break;}
  const R=(fanW-cw)/2/Math.sin(maxAngle),sag=R*(1-Math.cos(maxAngle));
  const rowGap=Math.round(ch*(mobile?0.5:0.46)+sag*0.55),cx=pad+full/2;
+ const startOf=r=>{const inRow=Math.min(cols,n-r*cols),span=maxAngle*(inRow-1)/(cols-1||1),a=inRow>1?-span:0;return {x:cx+R*Math.sin(a)-cw/2,y:pad+r*rowGap+R*(1-Math.cos(a)),a};};
  cards.forEach((c,i)=>{const r=Math.floor(i/cols),k=i%cols,inRow=Math.min(cols,n-r*cols);
   const span=maxAngle*(inRow-1)/(cols-1||1),a=inRow>1?-span+2*span*k/(inRow-1):0;
   const x=cx+R*Math.sin(a)-cw/2,y=pad+r*rowGap+R*(1-Math.cos(a));
-  c.style.setProperty('--rx',x.toFixed(1)+'px');c.style.setProperty('--ry',y.toFixed(1)+'px');c.style.setProperty('--rr',(a*180/Math.PI).toFixed(2)+'deg');c.style.setProperty('--rw',cw+'px');c.style.setProperty('--rh',ch+'px');c.style.setProperty('--rz',String(r*100+k));});
+  c.style.setProperty('--rx',x.toFixed(1)+'px');c.style.setProperty('--ry',y.toFixed(1)+'px');c.style.setProperty('--rr',(a*180/Math.PI).toFixed(2)+'deg');c.style.setProperty('--rw',cw+'px');c.style.setProperty('--rh',ch+'px');c.style.setProperty('--rz',String(r*100+k));const st=startOf(r);c.style.setProperty('--dx',(st.x-x).toFixed(1)+'px');c.style.setProperty('--dy',(st.y-y).toFixed(1)+'px');c.style.setProperty('--r0',(st.a*180/Math.PI).toFixed(2)+'deg');c.style.setProperty('--deal',String(i));});
  const curve=Math.round(sag);
+ if(fan.classList.contains('laying-cards')){fan.classList.remove('laying-cards');void fan.offsetWidth;fan.classList.add('laying-cards');}
  fan.style.setProperty('--rows-h',(pad*2+(rows-1)*rowGap+ch+curve+Math.round(cw*0.25))+'px');
 }
 document.addEventListener('DOMContentLoaded',()=>{
