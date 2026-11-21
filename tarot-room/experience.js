@@ -35,7 +35,7 @@ function renderPhysicalDeck(){
  return `<button type="button" class="fan-card" data-fan-index="${i}" style="--card-x:${x.toFixed(2)}px;--card-y:${y.toFixed(2)}px;--card-angle:${(-angle*180/Math.PI).toFixed(2)}deg;--lay-time:${Math.round(80+1250*i/(appState.candidatePool.length-1))}ms;--deal-delay:${i*5}ms;--fan-order:${i}" aria-label="뒷면 카드 ${i+1}번째 / ${appState.candidatePool.length}장 중 뽑기${picked.has(card.id)?', 이미 선택함':''}" tabindex="${i===firstAvailable?0:-1}" ${!deckOpen||full||picked.has(card.id)?'disabled':''} onclick="if(event.detail===0)chooseFanCard(${i})" onkeydown="if(event.key==='ArrowRight'){event.preventDefault();focusNextFanCard(${i},1)}else if(event.key==='ArrowLeft'){event.preventDefault();focusNextFanCard(${i},-1)}">${getCardBackSvg(true)}</button>`;}).join('');
  const b=document.getElementById('open-deck');if(b){b.textContent=deckOpen?'카드 모으기':'천 위에 78장 펼치기';b.setAttribute('aria-expanded',String(deckOpen));}
  document.getElementById('fan-browse-controls')?.remove();
- const hint=document.getElementById('physical-deck-hint');if(hint)hint.textContent=full?'직접 고른 카드를 위에서 눌러 뒤집어 보세요.':deckOpen?'가로로 밀어 카드를 둘러보세요. 마우스를 올리면 카드가 살짝 올라오고, 원하는 카드를 톡 누르면 선택됩니다.':'스프레드 천 위에서 한 손으로 카드를 펼쳐드릴게요.';
+ const hint=document.getElementById('physical-deck-hint');if(hint)hint.textContent=full?'직접 고른 카드를 위에서 눌러 뒤집어 보세요.':deckOpen?'옆으로 밀어 둘러보고, 마음 가는 카드를 눌러 고르세요.':'스프레드 천 위에서 한 손으로 카드를 펼쳐드릴게요.';
  if(deckOpen&&!wasOpen)requestAnimationFrame(()=>{el.parentElement.scrollLeft=(el.parentElement.scrollWidth-el.parentElement.clientWidth)/2;});
 }
 const everydayScenes={

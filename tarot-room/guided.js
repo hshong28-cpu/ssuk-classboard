@@ -63,7 +63,7 @@ async function replyToIntake(){
  finishSoftTyping(document.getElementById('intake-guide'));status.textContent='';addIntakeStory(answer);intakeBusy=true;const button=document.getElementById('intake-reply');button.disabled=true;
  try{
   if(aiReady){status.textContent='말씀해 주신 이야기를 살펴보고 있어요…';await clarifyReadingQuestion(answer);status.textContent=document.getElementById('question-context-status').textContent;}
-  else{appendContextTurn('user',answer);intakeStep++;const text=intakeStep===1?INTAKE_QUESTIONS[intakeTopic][1]:'이야기해 주셔서 고마워요. 지금까지의 고민을 마음에 담고 카드를 골라볼까요?';appendContextTurn('assistant',text);status.textContent='기본 안내 질문입니다. AI를 연결하면 답변에 맞춰 질문이 달라집니다.';if(intakeStep>=2){document.getElementById('question-input').hidden=true;button.hidden=true;}}
+  else{appendContextTurn('user',answer);intakeStep++;const text=intakeStep===1?INTAKE_QUESTIONS[intakeTopic][1]:'이야기해 주셔서 고마워요. 지금까지의 고민을 마음에 담고 카드를 골라볼까요?';appendContextTurn('assistant',text);status.textContent='';if(intakeStep>=2){document.getElementById('question-input').hidden=true;button.hidden=true;}}
   document.getElementById('question-input').value='';document.getElementById('question-input').placeholder='안내자의 질문에 답하거나, 바로 카드 고르기로 넘어가세요.';
  }finally{intakeBusy=false;button.disabled=false;}
 }

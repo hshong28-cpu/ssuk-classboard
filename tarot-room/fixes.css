@@ -38,3 +38,27 @@
 .hero-header .app-select{min-height:42px;font-size:14px}
 @media (max-width:640px){.hero-header .app-select-wrap{grid-template-columns:auto 1fr;width:100%}}
 .compact-nav.dd-hidden+.app-select-wrap,.app-select-wrap:has(#step-select){max-width:720px;width:100%;margin:0 auto;padding:12px 16px;background:#15101ec9;border:1px solid #c8a87444;border-radius:10px;backdrop-filter:blur(10px)}
+/* ---- Simpler screen ---- */
+.disclosure-hint,.show-full-question,.deck-picker-head,#reading-service-label:empty,#intake-status:empty{display:none!important}
+/* Header: title + one menu */
+.compact-app .hero-header{display:flex!important;align-items:center;justify-content:space-between;flex-wrap:nowrap}
+.compact-app .hero-header>.hero-actions{display:none!important}
+.compact-app .hero-title-group{flex:1 1 auto}
+.compact-settings{position:relative;margin-left:auto;display:block}
+.compact-settings>summary{list-style:none;cursor:pointer;min-height:44px;display:flex;align-items:center;padding:0 14px!important;border:1px solid #b99565aa;border-radius:10px;color:#f0d9a4;font-size:14px;white-space:nowrap}
+.compact-settings>summary::-webkit-details-marker{display:none}
+.compact-settings[open]{max-width:none!important;padding:0!important;border:0!important;background:none!important}
+.menu-panel{position:absolute;right:0;top:calc(100% + 8px);z-index:50;width:min(300px,calc(100vw - 32px));display:grid;gap:10px;padding:16px;background:#1d1627f7;border:1px solid #d1ad7766;border-radius:12px;box-shadow:0 18px 40px #0009}
+.menu-panel .btn{width:100%;justify-content:flex-start;margin:0!important;font-size:14px!important;white-space:normal}
+.menu-panel .app-select-wrap{grid-template-columns:1fr!important;width:100%}
+.menu-panel .volume-label{font-size:13px}
+.menu-panel .volume-label input{flex:1}
+/* Less empty space above the steps */
+.room-scene{height:90px!important}
+@media (max-width:640px){.room-scene{height:24px!important}}
+/* Step dropdown: lighter, no extra box */
+.app-select-wrap:has(#step-select){background:none!important;border:0!important;padding:0!important;backdrop-filter:none!important;grid-template-columns:auto 1fr;align-items:center;gap:10px}
+.compact-app .hero-header{position:relative;z-index:30}
+#room-welcome:focus{outline:none}
+.app-select-wrap:has(#step-select){max-width:720px;width:100%;margin:0 auto!important;grid-template-columns:1fr!important}
+.app-select-wrap:has(#step-select)>.app-select-label{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}

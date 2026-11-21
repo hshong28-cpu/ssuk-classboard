@@ -5,7 +5,7 @@ function addReadingTurn(role,text){const log=document.getElementById('conversati
 function syncReadingFlow(){
  const sig=flowSignature();if(conversationSignature!==sig){conversationSignature=sig;conversationRequestId++;conversationPending?.abort();conversationPending=null;conversationStarted=false;conversationFinished=false;conversationTurns=[];document.getElementById('conversation-log').replaceChildren();addReadingTurn('assistant','카드가 준비되면 전체 흐름부터 읽고, 궁금한 부분을 함께 살펴볼게요.');document.getElementById('conversation-actions').hidden=true;document.getElementById('reading-next-step').hidden=true;document.getElementById('conversation-busy').hidden=true;document.getElementById('conversation-error').textContent='';document.getElementById('tarot-study').hidden=true;document.body.classList.remove('learning-mode');}
  const complete=allCardsFlipped();document.getElementById('begin-conversation').disabled=!complete||!!conversationPending||conversationFinished;document.getElementById('begin-conversation').textContent=conversationStarted?'처음부터 다시 읽기':'리딩 시작하기';
- document.getElementById('reading-service-label').textContent=aiReady?'AI 안내자 · 질문의 맥락에 맞춰 대화를 이어갑니다.':'기본 리딩 · 카드 데이터로 풀이합니다. 자유로운 대화는 AI 연결 후 사용할 수 있어요.';
+ document.getElementById('reading-service-label').textContent=aiReady?'AI 안내자 · 질문의 맥락에 맞춰 대화를 이어갑니다.':'';
  if(document.body.classList.contains('learning-mode'))renderLearningAngles();
 }
 function localReading(){
