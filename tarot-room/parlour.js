@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{const scene=document.createElement('div');scene.className='room-scene';scene.setAttribute('role','img');scene.setAttribute('aria-label','실크 커튼과 촛불, 빛나는 유리구슬과 자수 천을 깐 원목 타로 테이블');const art=document.createElement('div');art.className='parlour-scene-art';scene.append(art);document.querySelector('.compact-nav').before(scene);});
