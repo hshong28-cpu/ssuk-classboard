@@ -65,10 +65,10 @@
 /* All 78 cards visible at once (rows.js) */
 .physical-deck-scroll:has(#deck-fan.rows-spread){overflow:hidden;mask-image:none;cursor:default}
 #deck-fan.rows-spread{width:100%!important;max-width:none!important;height:var(--rows-h)!important;margin:0!important}
-#deck-fan.rows-spread .fan-card,#deck-fan.rows-spread .fan-card:hover,#deck-fan.rows-spread .fan-card:active,#deck-fan.rows-spread .fan-card:focus{position:absolute!important;left:var(--rx)!important;top:var(--ry)!important;width:var(--rw)!important;height:var(--rh)!important;transform:none!important;translate:none!important;scale:1!important;margin:0!important;z-index:var(--rz)!important;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease!important;animation:none!important;border-radius:6px}
-#deck-fan.rows-spread .fan-card.is-hovered,#deck-fan.rows-spread .fan-card:focus-visible{transform:translateY(-14px)!important;z-index:5000!important;filter:brightness(1.15);box-shadow:0 14px 22px #0009,0 0 0 2px #e7c88d}
+#deck-fan.rows-spread .fan-card,#deck-fan.rows-spread .fan-card:hover,#deck-fan.rows-spread .fan-card:active,#deck-fan.rows-spread .fan-card:focus{position:absolute!important;left:var(--rx)!important;top:var(--ry)!important;width:var(--rw)!important;height:var(--rh)!important;transform:rotate(var(--rr,0deg))!important;transform-origin:50% 100%!important;translate:none!important;scale:1!important;margin:0!important;z-index:var(--rz)!important;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease!important;animation:none!important;border-radius:6px}
+#deck-fan.rows-spread .fan-card.is-hovered,#deck-fan.rows-spread .fan-card:focus-visible{transform:rotate(var(--rr,0deg)) translateY(-14px)!important;z-index:5000!important;filter:brightness(1.15);box-shadow:0 14px 22px #0009,0 0 0 2px #e7c88d}
 #deck-fan.rows-spread .fan-card:disabled{opacity:.12!important}
 #deck-fan.rows-spread.laying-cards .fan-card{animation:rows-in .35s ease both!important;animation-delay:calc(var(--fan-order) * 6ms)!important}
-@keyframes rows-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes rows-in{from{opacity:0;transform:rotate(0deg) translateY(10px)}to{opacity:1;transform:rotate(var(--rr,0deg))}}
 @media (prefers-reduced-motion:reduce){#deck-fan.rows-spread .fan-card{animation:none!important;transition:none!important}}
 .physical-deck-scroll:has(#deck-fan.rows-spread){padding-bottom:8px!important}
