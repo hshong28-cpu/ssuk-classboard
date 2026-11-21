@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..600&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <script src="josa.js"></script>
   <style>
     :root {
       color-scheme: dark;
@@ -1094,7 +1095,7 @@
     .deck-front-image { width:100%; height:100%; min-height:0; object-fit:contain; }
     .card-anatomy-art.reversed-art .deck-front-image { transform:rotate(180deg); }
 </style>
-<link rel="stylesheet" href="studio.css"><link rel="stylesheet" href="parlour.css"><link rel="stylesheet" href="guided.css">
+<link rel="stylesheet" href="studio.css"><link rel="stylesheet" href="parlour.css"><link rel="stylesheet" href="guided.css"><link rel="stylesheet" href="fixes.css">
 </head>
 <body><section id="room-entrance" class="room-entrance" role="dialog" aria-modal="true" aria-labelledby="entrance-title">
  <div class="room-door left-door"></div><div class="room-door right-door"></div>
@@ -2102,14 +2103,14 @@
             psychUp: `${st.elementKo}(${elTrait}) 에너지가 '${rk.kwUp[0]}'의 모습으로 자연스럽게 흐르며 일상 속에서 구체적인 균형을 만들어갑니다.`,
             psychRev: `${st.elementKo}(${elTrait})의 흐름이 일시적으로 억압되거나 지나쳐 '${rk.kwRev[0]}'의 신호로 나타나고 있어 호흡 조절이 필요합니다.`,
             catUp: {
-              love: `관계 안에서 '${rk.kwUp[0]}'과 '${rk.kwUp[1]}'의 에너지가 긍정적으로 작용하여 진솔한 호흡을 맞추어 가기 좋습니다.`,
+              love: `관계 안에서 '${rk.kwUp[0]}'${josa(rk.kwUp[0],'과/와')} '${rk.kwUp[1]}'의 에너지가 긍정적으로 작용하여 진솔한 호흡을 맞추어 가기 좋습니다.`,
               career: `업무와 진로에서 '${rk.kwUp[0]}'의 태도를 발휘할 때 실질적인 진전과 주변의 신뢰를 함께 얻게 됩니다.`,
-              finance: `재정적 판단에 있어 '${rk.kwUp[0]}'과 '${rk.kwUp[2]}'을 기준으로 삼으면 안정적인 흐름을 유지할 수 있습니다.`,
+              finance: `재정적 판단에 있어 '${rk.kwUp[0]}'${josa(rk.kwUp[0],'과/와')} '${rk.kwUp[2]}'${josa(rk.kwUp[2],'을/를')} 기준으로 삼으면 안정적인 흐름을 유지할 수 있습니다.`,
               inner: `내면의 '${rk.kwUp[0]}' 감각을 알아차리고 일상의 작은 선택에 반영할 때 심리적 무게중심이 바로 섭니다.`
             },
             catRev: {
-              love: `관계에서 '${rk.kwRev[0]}'이나 '${rk.kwRev[1]}'의 조짐이 보인다면, 서운함을 쌓기 전 솔직하고 차분한 대화가 필요합니다.`,
-              career: `일하는 과정에서 '${rk.kwRev[0]}'으로 인해 효율이 떨어질 수 있으니, 업무 기준과 페이스부터 재정비하세요.`,
+              love: `관계에서 '${rk.kwRev[0]}'${josa(rk.kwRev[0],'이나/나')} '${rk.kwRev[1]}'의 조짐이 보인다면, 서운함을 쌓기 전 솔직하고 차분한 대화가 필요합니다.`,
+              career: `일하는 과정에서 '${rk.kwRev[0]}'${josa(rk.kwRev[0],'으로/로')} 인해 효율이 떨어질 수 있으니, 업무 기준과 페이스부터 재정비하세요.`,
               finance: `자금 흐름에서 '${rk.kwRev[0]}' 신호를 점검하여 무리한 기대나 막연한 지출을 미리 줄이는 것이 현명합니다.`,
               inner: `내면에서 '${rk.kwRev[0]}' 상태가 느껴질 때는 스스로를 다그치기보다 잠시 속도를 낮춰 균형을 회복하세요.`
             },
@@ -2420,7 +2421,7 @@
           : deficientList[0] === `water` ? `자신의 솔직한 감정을 다독이는 정서적 여유`
           : deficientList[0] === `air` ? `한 걸음 물러나 사실을 정리하는 객관적 시선`
           : `망설임을 깨고 먼저 시도해 보는 작은 추진력`;
-        elemDiagnosis += ` 반면 ${defNames} 에너지가 상대적으로 비어 있어, ${defAdvice}을 의식적으로 보충해 주면 균형이 한결 편안해집니다.`;
+        elemDiagnosis += ` 반면 ${defNames} 에너지가 상대적으로 비어 있어, ${defAdvice}${josa(defAdvice,'을/를')} 의식적으로 보충해 주면 균형이 한결 편안해집니다.`;
       }
 
       return {
@@ -2455,7 +2456,7 @@
       if (hasCrisisEarly && hasHealingLate) {
         arcPhrase = `특히 '${c1.card.nameKo}'·'${c2.card.nameKo}'에서 겪은 혼돈과 낡은 틀의 해체가 '${c3.card.nameKo}'의 정화와 통합으로 이어지는 뚜렷한 심리적 변형 서사가 읽힙니다. 지나온 진통이 헛되지 않고 성숙한 회복으로 넘어가는 흐름입니다.`;
       } else {
-        arcPhrase = `첫 자리의 '${c1.card.nameKo}'에서 형성된 배경이 현재 자리의 '${c2.card.nameKo}'라는 핵심 과제를 거쳐, 결과 자리의 '${c3.card.nameKo}'가 가리키는 방향으로 서서히 이동하고 있습니다.`;
+        arcPhrase = `첫 자리의 '${c1.card.nameKo}'에서 형성된 배경이 현재 자리의 '${c2.card.nameKo}'${josa(c2.card.nameKo,'이라는/라는')} 핵심 과제를 거쳐, 결과 자리의 '${c3.card.nameKo}'${josa(c3.card.nameKo,'이/가')} 가리키는 방향으로 서서히 이동하고 있습니다.`;
       }
 
       // Elemental interaction
@@ -2491,7 +2492,7 @@
       const outcomeSlot = drawnSlots.length === 3 ? drawnSlots[2] : drawnSlots[0];
       const catLabel = CATEGORIES[categoryId].label;
 
-      const guidance = `이번 '${catLabel}' 리딩은 어떤 정해진 결말을 통보하기보다, 현재 자리의 '${focusSlot.card.nameKo}'가 비추는 태도를 스스로 조율할 때 '${outcomeSlot.card.nameKo}'의 방향으로 나아갈 가능성이 높아짐을 보여줍니다. ${focusSlot.card.advice}`;
+      const guidance = `이번 '${catLabel}' 리딩은 어떤 정해진 결말을 통보하기보다, 현재 자리의 '${focusSlot.card.nameKo}'${josa(focusSlot.card.nameKo,'이/가')} 비추는 태도를 스스로 조율할 때 '${outcomeSlot.card.nameKo}'의 방향으로 나아갈 가능성이 높아짐을 보여줍니다. ${focusSlot.card.advice}`;
 
       const prompts = [
         `카드에 담긴 그림이나 키워드 중 지금 내 마음에서 가장 강하게 걸리거나 위안이 되었던 한 지점은 무엇이었나요?`,

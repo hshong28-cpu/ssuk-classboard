@@ -7,8 +7,8 @@ const EXTRA_TOPICS={
 Object.assign(CATEGORIES,EXTRA_TOPICS);
 for(const c of FULL_DECK)for(const [key,topic]of Object.entries(EXTRA_TOPICS)){
  const plain=c.arcana==='major'?'이 카드가 다루는 변화와 태도를':'이 카드가 다루는 일상의 대응을';
- c.catUp[key]=`${c.nameKo}의 ‘${c.keywordsUp[0]}’를 중심으로 ${plain} 살펴볼 수 있어요. ${topic.focus}`;
- c.catRev[key]=`${c.nameKo}의 ‘${c.keywordsRev[0]}’가 막힘·과잉·내면화 중 어느 방식으로 나타나는지 확인해 보세요. ${topic.focus}`;
+ c.catUp[key]=`${c.nameKo}의 ‘${c.keywordsUp[0]}’${josa(c.keywordsUp[0],'을/를')} 중심으로 ${plain} 살펴볼 수 있어요. ${topic.focus}`;
+ c.catRev[key]=`${c.nameKo}의 ‘${c.keywordsRev[0]}’${josa(c.keywordsRev[0],'이/가')} 막힘·과잉·내면화 중 어느 방식으로 나타나는지 확인해 보세요. ${topic.focus}`;
 }
 let questionContextTurns=[],questionContextSignature='',questionContextRequest=null,questionContextSequence=0;
 function questionContextKey(){return JSON.stringify([appState.category,appState.question.trim()]);}

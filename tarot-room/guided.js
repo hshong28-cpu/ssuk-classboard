@@ -42,7 +42,7 @@ function chooseIntakeTopic(id,unsure=false){
  selectCategory(id);handleQuestionInput('');document.getElementById('question-input').value='';
  const group=document.querySelector('[aria-label="상담 주제 카테고리"]');group.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(unsure?b.id==='intake-unsure':b.dataset.category===id)));
  document.getElementById('chosen-topic-label').textContent=unsure?'아직 잘 모르겠어요':CATEGORIES[id].label;
- document.getElementById('question-context-answer').value='';
+ document.getElementById('question-context-answer').value='';document.getElementById('intake-story-log')?.replaceChildren();
  const question=document.getElementById('intake-question-surface'),topic=document.querySelector('.topic-first');
  changeIntakeSurface(topic,question,()=>{
   document.getElementById('intake-tools').hidden=false;document.getElementById('question-input').hidden=false;document.getElementById('intake-reply').hidden=false;
@@ -57,9 +57,10 @@ function collectIntakeAnswer(){
  const field=document.getElementById('question-input'),answer=field.value.trim();if(!answer)return '';
  if(!intakeStory){intakeStory=answer;handleQuestionInput(answer);}return answer;
 }
+function addIntakeStory(text){const log=document.getElementById('intake-story-log');if(!log)return;const li=document.createElement('li');li.textContent=text;log.append(li);}
 async function replyToIntake(){
  if(intakeBusy)return;const answer=collectIntakeAnswer(),status=document.getElementById('intake-status');if(!answer){status.textContent='아래에 짧게 답해 주세요.';document.getElementById('question-input').focus();return;}
- finishSoftTyping(document.getElementById('intake-guide'));status.textContent='';intakeBusy=true;const button=document.getElementById('intake-reply');button.disabled=true;
+ finishSoftTyping(document.getElementById('intake-guide'));status.textContent='';addIntakeStory(answer);intakeBusy=true;const button=document.getElementById('intake-reply');button.disabled=true;
  try{
   if(aiReady){status.textContent='말씀해 주신 이야기를 살펴보고 있어요…';await clarifyReadingQuestion(answer);status.textContent=document.getElementById('question-context-status').textContent;}
   else{appendContextTurn('user',answer);intakeStep++;const text=intakeStep===1?INTAKE_QUESTIONS[intakeTopic][1]:'이야기해 주셔서 고마워요. 지금까지의 고민을 마음에 담고 카드를 골라볼까요?';appendContextTurn('assistant',text);status.textContent='기본 안내 질문입니다. AI를 연결하면 답변에 맞춰 질문이 달라집니다.';if(intakeStep>=2){document.getElementById('question-input').hidden=true;button.hidden=true;}}
@@ -80,7 +81,8 @@ document.addEventListener('DOMContentLoaded',()=>{
  const bar=document.createElement('div');bar.className='chosen-topic-bar';bar.innerHTML='<span id="chosen-topic-label"></span><button type="button" onclick="reopenIntakeTopics()">고민 분야 바꾸기</button>';
  const guide=document.createElement('p');guide.id='intake-guide';guide.className='intake-guide';guide.setAttribute('role','status');guide.onclick=()=>finishSoftTyping(guide);
  const finish=document.createElement('button');finish.type='button';finish.className='show-full-question';finish.textContent='질문 전체 바로 보기';finish.onclick=()=>finishSoftTyping(guide);
- surface.append(bar,guide,finish,questionBlock);topic.after(surface);
+ const storyLog=document.createElement('ol');storyLog.id='intake-story-log';storyLog.className='intake-story-log';storyLog.setAttribute('aria-label','내가 들려준 이야기');
+ surface.append(bar,guide,finish,storyLog,questionBlock);topic.after(surface);
  const label=questionBlock.querySelector('label');label.textContent='어떤 일이 있었나요?';const input=document.getElementById('question-input');input.removeAttribute('oninput');
  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();replyToIntake();}});
  const reply=document.createElement('button');reply.id='intake-reply';reply.type='button';reply.className='btn btn-secondary';reply.textContent='답하고 다음 질문 듣기';reply.onclick=replyToIntake;questionBlock.append(reply);

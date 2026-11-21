@@ -19,16 +19,22 @@ function localReading(){
   inner:'오늘 마음이 달라진 순간을 하나 떠올리고, 그때 필요했던 것을 한 단어로 적어 보세요.'
  };
  const positions=SPREADS[appState.spread].positions;
- const paragraphs=appState.drawnSlots.map((slot,index)=>{
+ const category=appState.category;
+ const story=(appState.question||'').trim();
+ const extra=(typeof getQuestionContext==='function'?getQuestionContext():[]).filter(t=>t.role==='user').map(t=>t.content.trim()).filter(t=>t&&t!==story);
+ const intro=story
+  ? '“'+story+'”라는 이야기에 카드를 비춰볼게요.'+(extra.length?' 덧붙여 주신 “'+extra[extra.length-1]+'”도 함께 생각하며 읽을게요.':'')
+  : CATEGORIES[category].label+' 고민을 마음에 두고 카드를 읽어볼게요.';
+ const paragraphs=[intro].concat(appState.drawnSlots.map((slot,index)=>{
   const card=slot.card;
   const keyword=(slot.isReversed?card.keywordsRev:card.keywordsUp)[0];
-  const scene=card.arcana==='major'?majorLessons[card.number][2]:everydayScenes[card.suitKey][card.number-1];
   const heading=positions[index].title+' · '+card.nameKo+' ('+(slot.isReversed?'역방향':'정방향')+')';
+  const reading=(slot.isReversed?card.catRev:card.catUp)[category];
   const line=slot.isReversed
-   ? '이런 때 무엇이 걸림돌인지 살펴보는 카드예요. 여기서 눈여겨볼 말은 ‘'+keyword+'’예요.'
-   : '이럴 때 떠올릴 수 있는 카드예요. 이 카드가 들려주는 말은 ‘'+keyword+'’예요.';
-  return heading+'\n'+'“'+scene+'”을 떠올려 보세요. '+line;
- });
+   ? '이 자리에서 눈여겨볼 말은 ‘'+keyword+'’'+josa(keyword,'이에요/예요')+'. 무엇이 걸림돌이 되고 있는지 살펴보세요.'
+   : '이 자리에서 카드가 들려주는 말은 ‘'+keyword+'’'+josa(keyword,'이에요/예요')+'.';
+  return heading+'\n'+(reading?reading+' ':'')+line;
+ }));
  paragraphs.push('오늘 해볼 일\n'+steps[appState.category]);
  return paragraphs.join('\n\n');
 }
@@ -42,9 +48,9 @@ async function requestConversation(mode,answer){
 async function beginConversation(){if(!allCardsFlipped()||conversationPending)return;conversationFinished=false;document.getElementById('reading-next-step').hidden=true;conversationTurns=[];document.getElementById('conversation-log').replaceChildren();if(aiReady)return requestConversation('reading','');addReadingTurn('assistant',localReading());conversationStarted=true;document.getElementById('conversation-actions').hidden=false;syncReadingFlow();}
 function localFollowup(kind){
  const s=appState.drawnSlots[appState.focusedSlotIndex]||appState.drawnSlots[0],c=s.card,i=appState.drawnSlots.indexOf(s),p=SPREADS[appState.spread].positions[i],kw=(s.isReversed?c.keywordsRev:c.keywordsUp)[0];
- if(kind==='reason')return `${p.title}의 ${c.nameKo}부터 볼게요.\n\n① 카드 자체에서는 ‘${kw}’를 주요 키워드로 잡았어요.\n② ${p.title} 자리는 ${p.subtitle}을 살피는 관점이에요.\n③ 둘을 연결해 ‘${(s.isReversed?c.catRev:c.catUp)[appState.category]}’라고 읽었습니다.\n\n이 설명은 카드 데이터에서 만든 해석 근거예요. 당신의 실제 경험과 맞지 않는 부분은 다른 가능성으로 열어두어야 해요.`;
- if(kind==='alternative')return `${c.nameKo}를 반대 방향으로 읽는다면 ‘${(s.isReversed?c.keywordsUp:c.keywordsRev).join(', ')}’가 다른 관점이 돼요.\n\n현재 나온 방향을 바꾸는 것이 아니라, 같은 주제가 자연스럽게 표현될 때와 막히거나 과해질 때를 비교하는 연습이에요. ${lessonFor(c)[3]}\n\n현실에서 어느 쪽의 근거가 더 보이는지 확인해 보세요.`;
- return `${c.nameKo}의 ‘${kw}’를 작은 행동으로 바꾸어볼게요.\n\n${c.advice}\n\n오늘 한 번 시도할 수 있는 크기로 줄이고, 실제로 해본 뒤 무엇이 달라졌는지 한 줄 적어보세요. 상황에 맞지 않는 제안이라면 건너뛰어도 괜찮아요.`;
+ if(kind==='reason')return `${p.title}의 ${c.nameKo}부터 볼게요.\n\n① 카드 자체에서는 ‘${kw}’${josa(kw,'을/를')} 주요 키워드로 잡았어요.\n② ${p.title} 자리는 ${p.subtitle}${josa(p.subtitle,'을/를')} 살피는 관점이에요.\n③ 둘을 연결해 ‘${(s.isReversed?c.catRev:c.catUp)[appState.category]}’라고 읽었습니다.\n\n이 설명은 카드 데이터에서 만든 해석 근거예요. 당신의 실제 경험과 맞지 않는 부분은 다른 가능성으로 열어두어야 해요.`;
+ if(kind==='alternative')return `${c.nameKo}${josa(c.nameKo,'을/를')} 반대 방향으로 읽는다면 ‘${(s.isReversed?c.keywordsUp:c.keywordsRev).join(', ')}’${josa((s.isReversed?c.keywordsUp:c.keywordsRev).slice(-1)[0],'이/가')} 다른 관점이 돼요.\n\n현재 나온 방향을 바꾸는 것이 아니라, 같은 주제가 자연스럽게 표현될 때와 막히거나 과해질 때를 비교하는 연습이에요. ${lessonFor(c)[3]}\n\n현실에서 어느 쪽의 근거가 더 보이는지 확인해 보세요.`;
+ return `${c.nameKo}의 ‘${kw}’${josa(kw,'을/를')} 작은 행동으로 바꾸어볼게요.\n\n${c.advice}\n\n오늘 한 번 시도할 수 있는 크기로 줄이고, 실제로 해본 뒤 무엇이 달라졌는지 한 줄 적어보세요. 상황에 맞지 않는 제안이라면 건너뛰어도 괜찮아요.`;
 }
 async function askReadingChoice(kind){if(!conversationStarted||conversationPending)return;const q={reason:'왜 그렇게 읽나요?',alternative:'다른 해석도 있나요?',action:'일상에서 어떻게 해볼까요?'}[kind];if(aiReady){addReadingTurn('user',q);await requestConversation('conversation',q);return;}addReadingTurn('user',q);addReadingTurn('assistant',localFollowup(kind));}
 async function sendReadingAnswer(){const input=document.getElementById('reading-answer'),answer=input.value.trim();if(!answer||conversationPending)return;if(!aiReady){document.getElementById('conversation-error').textContent='자유롭게 적은 상황을 이해해 이어가는 대화는 AI 연결이 필요해요. 지금은 위의 추가 질문 세 가지로 카드 풀이를 더 살펴볼 수 있습니다.';return;}addReadingTurn('user',answer);await requestConversation('conversation',answer);}
@@ -64,10 +70,11 @@ function toggleRoomAmbient(){ambientWanted=!ambientWanted;syncRoomAudio();}
 function leaveReadingRoom(){conversationRequestId++;conversationPending?.abort();conversationPending=null;cancelRoomFilm();if(roomAmbient){roomAmbient.pause();roomAmbient.currentTime=0;}soundEnabled=false;stopCardFoley();document.getElementById('sound-toggle').textContent='카드 소리 꺼짐';document.getElementById('sound-toggle').setAttribute('aria-pressed','false');roomEntered=false;ambientWanted=false;syncRoomAudio();document.getElementById('room-entrance').hidden=false;document.getElementById('room-entrance').classList.remove('is-entering');document.getElementById('entrance-title').innerHTML='오늘의 이야기를<br>마음에 담아 가세요.';document.getElementById('enter-room').textContent='리딩룸에 다시 입장';document.querySelector('main').inert=true;document.body.classList.add('at-entrance');document.getElementById('enter-room').focus();}
 document.addEventListener('DOMContentLoaded',()=>{
  const oldUpdate=updateStudy;window.updateStudy=function(){oldUpdate();syncReadingFlow();};
- window.enterReadingRoom=function(){if(roomEntered)return;roomEntered=true;if(conversationFinished){conversationFinished=false;document.getElementById('reading-next-step').hidden=true;syncReadingFlow();}ambientWanted=document.getElementById('entrance-sound').checked;if(ambientWanted&&!soundEnabled)toggleStudioSound();syncRoomAudio();if(motionPreference()==='auto')completeArrival();else playRoomFilm(0,7.9,()=>{playRoomFilm(0,7.9,()=>{deckOpen=true;renderDeckFan(false);completeArrival();},'spread');});};
- const oldOpen=openPhysicalDeck;window.openPhysicalDeck=function(){if(deckOpen||motionPreference()==='auto'){oldOpen();return;}playRoomFilm(0,7.9,()=>{cancelRoomFilm();if(!deckOpen)oldOpen();document.getElementById('open-deck').focus();},'spread');};
+ window.enterReadingRoom=function(){if(roomEntered)return;roomEntered=true;if(conversationFinished){conversationFinished=false;document.getElementById('reading-next-step').hidden=true;syncReadingFlow();}ambientWanted=document.getElementById('entrance-sound').checked;if(ambientWanted&&!soundEnabled)toggleStudioSound();syncRoomAudio();if(motionPreference()==='auto')completeArrival();else playRoomFilm(0,7.9,completeArrival);};
+ const oldOpen=openPhysicalDeck;let spreadFilmSeen=false;window.openPhysicalDeck=function(){if(deckOpen||spreadFilmSeen||motionPreference()==='auto'){oldOpen();return;}spreadFilmSeen=true;playRoomFilm(0,7.9,()=>{cancelRoomFilm();if(!deckOpen)oldOpen();document.getElementById('open-deck').focus();},'spread');};
  document.getElementById('room-volume').addEventListener('input',e=>{if(!roomAmbient)roomAmbient=document.getElementById('room-ambient');roomAmbient.volume=Number(e.target.value)/100;});
  document.addEventListener('visibilitychange',syncRoomAudio);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('room-cinema').hidden)document.getElementById('skip-room-film').click();});
  document.getElementById('tarot-study').hidden=true;syncReadingFlow();
  // Status is set asynchronously by studio.js, update the connection label too.
  new MutationObserver(()=>syncReadingFlow()).observe(document.getElementById('ai-connection'),{childList:true});

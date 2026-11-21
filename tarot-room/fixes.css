@@ -1,0 +1,12 @@
+/* UX fixes (2026-11): mobile settings overflow, small text, story log. */
+.compact-settings{flex-wrap:wrap;min-width:0;max-width:100%}
+.compact-settings[open]>.btn{white-space:normal}
+@media (max-width:640px){
+ .compact-app .hero-header{flex-wrap:wrap}
+ .compact-settings[open]{max-width:calc(100vw - 32px);width:100%}
+}
+.entrance-note{font-size:13px!important}
+.intake-story-log{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.intake-story-log:empty{display:none}
+.intake-story-log li{align-self:end;justify-self:end;max-width:85%;padding:8px 12px;border-radius:12px 12px 2px 12px;background:#e7c88d1f;border:1px solid #d1ad7744;color:inherit;font-size:14px;line-height:1.6}
+.intake-story-log li::before{content:'나 · ';opacity:.7;font-size:12px}
