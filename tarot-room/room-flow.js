@@ -12,6 +12,7 @@ function localReading(){
  const steps={
   parenting:'오늘 아이와 이야기할 때 “어떤 부분이 제일 어려웠어?”라고 묻고, 답을 끝까지 들어보세요.',
   housing:'집을 볼 때 꼭 지키고 싶은 조건 하나를 골라 보세요. 예를 들면 “퇴근 후 아이를 데리러 가는 데 걸리는 시간”이에요.',
+  health:'오늘 잠·식사·움직임 중 하나를 골라, 10분 안에 할 수 있는 작은 돌봄을 하나 해보세요. 몸이 불편하다면 카드보다 의료 전문가의 상담을 먼저 받아 주세요.',
   daily:'오늘 할 일 중 하나를 고르고, 첫 5분 동안 할 수 있는 일만 정해 보세요.',
   love:'마음에 걸린 말 한마디가 있다면 “그때 나는 이렇게 느꼈어”로 대화를 시작해 보세요.',
   career:'고민하는 일에서 혼자 정할 수 있는 것과 동료에게 물어볼 것을 하나씩 적어 보세요.',
@@ -25,11 +26,14 @@ function localReading(){
  const intro=story
   ? '“'+story+'”라는 이야기에 카드를 비춰볼게요.'+(extra.length?' 덧붙여 주신 “'+extra[extra.length-1]+'”도 함께 생각하며 읽을게요.':'')
   : CATEGORIES[category].label+' 고민을 마음에 두고 카드를 읽어볼게요.';
- const paragraphs=[intro].concat(appState.drawnSlots.map((slot,index)=>{
+ const focusNote=CATEGORIES[category].focus;
+ const paragraphs=[focusNote?intro+'\n'+focusNote:intro].concat(appState.drawnSlots.map((slot,index)=>{
   const card=slot.card;
   const keyword=(slot.isReversed?card.keywordsRev:card.keywordsUp)[0];
   const heading=positions[index].title+' · '+card.nameKo+' ('+(slot.isReversed?'역방향':'정방향')+')';
-  const reading=(slot.isReversed?card.catRev:card.catUp)[category];
+  const focus=CATEGORIES[category].focus;
+  let reading=(slot.isReversed?card.catRev:card.catUp)[category];
+  if(focus&&reading)reading=reading.replace(' '+focus,'').replace(focus,'');
   const line=slot.isReversed
    ? '이 자리에서 눈여겨볼 말은 ‘'+keyword+'’'+josa(keyword,'이에요/예요')+'. 무엇이 걸림돌이 되고 있는지 살펴보세요.'
    : '이 자리에서 카드가 들려주는 말은 ‘'+keyword+'’'+josa(keyword,'이에요/예요')+'.';
