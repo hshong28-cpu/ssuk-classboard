@@ -77,6 +77,14 @@ document.addEventListener('DOMContentLoaded',()=>{
  topic.querySelector('.field-label').textContent='마음이 가는 고민 분야를 먼저 골라 주세요';
  const group=topic.querySelector('[role="group"]');group.classList.add('intake-topic-grid');group.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-pressed','false');b.onclick=()=>chooseIntakeTopic(b.dataset.category);});
  const unsure=document.createElement('button');unsure.type='button';unsure.id='intake-unsure';unsure.className='pill-btn';unsure.textContent='아직 잘 모르겠어요';unsure.setAttribute('aria-pressed','false');unsure.onclick=()=>chooseIntakeTopic('inner',true);group.append(unsure);
+ const pick=document.createElement('select');pick.id='intake-topic-select';pick.className='intake-topic-select';
+ const ph=document.createElement('option');ph.value='';ph.textContent='고민 분야를 골라 주세요';ph.disabled=true;ph.selected=true;pick.append(ph);
+ group.querySelectorAll('button').forEach(btn=>{const o=document.createElement('option');o.value=btn.id==='intake-unsure'?'unsure':btn.dataset.category;o.textContent=btn.textContent.trim();pick.append(o);});
+ pick.addEventListener('change',()=>{const v=pick.value;if(!v)return;if(v==='unsure')chooseIntakeTopic('inner',true);else chooseIntakeTopic(v);});
+ const topicLabel=topic.querySelector('.field-label');const labelEl=document.createElement('label');labelEl.className=topicLabel.className;labelEl.htmlFor='intake-topic-select';labelEl.textContent=topicLabel.textContent;topicLabel.replaceWith(labelEl);
+ group.hidden=true;group.after(pick);
+ const resetPick=()=>{pick.value='';};
+ const oldReopen=window.reopenIntakeTopics;window.reopenIntakeTopics=function(){resetPick();oldReopen();};
  const surface=document.createElement('div');surface.id='intake-question-surface';surface.className='intake-question-surface';surface.hidden=true;
  const bar=document.createElement('div');bar.className='chosen-topic-bar';bar.innerHTML='<span id="chosen-topic-label"></span><button type="button" onclick="reopenIntakeTopics()">고민 분야 바꾸기</button>';
  const guide=document.createElement('p');guide.id='intake-guide';guide.className='intake-guide';guide.setAttribute('role','status');guide.onclick=()=>finishSoftTyping(guide);
@@ -93,6 +101,6 @@ document.addEventListener('DOMContentLoaded',()=>{
  const oldPrepare=compactPrepare;window.compactPrepare=function(){if(!intakeTopic){topic.focus?.();return;}const answer=collectIntakeAnswer();if(answer&&questionContextTurns.at(-1)?.content!==answer)appendContextTurn('user',answer);oldPrepare();};
  const oldAppend=appendContextTurn;window.appendContextTurn=function(role,text){oldAppend(role,text);if(role==='assistant')showIntakeQuestion(text);};
  const oldReading=addReadingTurn;window.addReadingTurn=function(role,text){oldReading(role,text);if(role!=='user'){const p=document.querySelector('#conversation-log .chat-turn:last-child p');if(p)softlyType(p,text);}};
- const oldLeave=leaveReadingRoom;window.leaveReadingRoom=function(){document.querySelectorAll('.is-typing').forEach(finishSoftTyping);intakeTransition++;resetQuestionContext();intakeBusy=false;intakeTopic=null;document.querySelector('.topic-first').hidden=false;document.getElementById('intake-question-surface').hidden=true;document.getElementById('intake-tools').hidden=true;document.getElementById('compact-cards-nav').disabled=true;oldLeave();};
+ const oldLeave=leaveReadingRoom;window.leaveReadingRoom=function(){document.querySelectorAll('.is-typing').forEach(finishSoftTyping);intakeTransition++;resetQuestionContext();intakeBusy=false;intakeTopic=null;document.querySelector('.topic-first').hidden=false;document.getElementById('intake-topic-select').value='';document.getElementById('intake-question-surface').hidden=true;document.getElementById('intake-tools').hidden=true;document.getElementById('compact-cards-nav').disabled=true;oldLeave();};
  const oldSetStage=setCompactStage;window.setCompactStage=function(stage){if(stage==='cards'&&!intakeTopic)return;oldSetStage(stage);};
 });
