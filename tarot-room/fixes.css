@@ -240,3 +240,26 @@ body.chuldu-open{overflow:hidden}
 .compact-settings[open] .tsel-list{position:fixed}
 .chuldu{background:radial-gradient(ellipse at 50% 45%,#2a1c0ef5 0%,#0b0710fa 60%,#060409 100%)!important}
 @keyframes cd-ring{0%{opacity:.85;transform:scale(1)}60%{opacity:0;transform:scale(18)}100%{opacity:0;transform:scale(20)}}
+/* ---- Deck picker ---- */
+.deck-pick{margin:4px 0 22px}
+.deck-pick-title{margin:0 0 10px;font-size:13px;color:#d9bf8f;letter-spacing:.03em}
+.deck-pick-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.deck-opt{display:flex;gap:12px;align-items:center;text-align:left;padding:12px;border-radius:14px;border:1px solid #c9a46a40;background:linear-gradient(180deg,#1e1629,#150f1d);color:#efe2c8;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s}
+.deck-opt:hover{border-color:#d4b27a88}
+.deck-opt.is-on{border-color:#e3c48c;box-shadow:0 0 0 3px #d4b27a33,0 10px 24px #0006}
+.deck-opt:focus-visible{outline:none;box-shadow:0 0 0 3px #d4b27a66}
+.deck-opt-cards{position:relative;flex:none;width:64px;height:106px}
+.deck-opt-cards::before{content:'';position:absolute;inset:0;border-radius:6px;background:var(--back) center/cover;transform:rotate(-9deg) translate(-6px,2px);box-shadow:0 6px 14px #0008;border:1px solid #c9a46a55}
+.deck-opt-cards img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:6px;transform:rotate(6deg) translate(6px,0);box-shadow:0 8px 16px #0009;border:1px solid #c9a46a66}
+.deck-opt-text{display:grid;gap:4px;min-width:0}
+.deck-opt-text strong{font-size:15px;color:#f3dfbc}
+.deck-opt-text span{font-size:12.5px;line-height:1.55;color:#cbbfd2}
+.deck-opt.is-on .deck-opt-text strong::after{content:' ✓';color:#d4b27a}
+@media (max-width:520px){.deck-pick-row{grid-template-columns:1fr}.deck-opt-cards{width:54px;height:90px}}
+/* ---- Joseon-only touches (only while the Joseon deck is chosen) ---- */
+body.deck-joseon .compact-app .observation-well,body.compact-app.deck-joseon .observation-well{box-shadow:0 20px 55px #03010788,inset 0 0 0 6px #3d281bbd,inset 0 0 0 7px #d3ab683d,inset 0 0 0 11px #12101a,inset 0 0 0 12px #c9a46a33}
+body.deck-joseon .physical-deck-scroll{background:
+  repeating-linear-gradient(0deg,#c9a46a0d 0 1px,transparent 1px 22px),repeating-linear-gradient(90deg,#c9a46a0d 0 1px,transparent 1px 22px),
+  radial-gradient(ellipse at 50% 20%,#533b6e44,transparent 70%),#1a142b!important}
+body.deck-joseon .shuffle-ritual{background:repeating-linear-gradient(0deg,#c9a46a0a 0 1px,transparent 1px 26px),repeating-linear-gradient(90deg,#c9a46a0a 0 1px,transparent 1px 26px),radial-gradient(ellipse at 50% 30%,#3a2a4f55,transparent 70%),#110c18}
+body.deck-joseon .reading-cards::before{content:'';position:absolute}

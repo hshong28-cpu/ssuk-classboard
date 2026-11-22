@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  heading.textContent=greeting;
  const originalArrival=completeArrival;
  window.completeArrival=function(){originalArrival();softlyType(heading,greeting);};
- topic.querySelector('.field-label').textContent='마음이 가는 고민 분야를 먼저 골라 주세요';
+ topic.querySelector('.field-label').textContent='이제, 마음이 가는 고민 분야를 골라 주세요';
  const group=topic.querySelector('[role="group"]');group.classList.add('intake-topic-grid');group.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-pressed','false');b.onclick=()=>chooseIntakeTopic(b.dataset.category);});
  const unsure=document.createElement('button');unsure.type='button';unsure.id='intake-unsure';unsure.className='pill-btn';unsure.textContent='아직 잘 모르겠어요';unsure.setAttribute('aria-pressed','false');unsure.onclick=()=>chooseIntakeTopic('inner',true);group.append(unsure);
  const pick=document.createElement('select');pick.id='intake-topic-select';pick.className='intake-topic-select';

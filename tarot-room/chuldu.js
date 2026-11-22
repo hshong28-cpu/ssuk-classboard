@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  ov.addEventListener('click',()=>{clearTimeout(timer);ov.hidden=true;ov.classList.remove('go','out');document.body.classList.remove('chuldu-open');});
  const base=window.updateTableControls;window.updateTableControls=function(...a){const r=base.apply(this,a);
   const key=appState.drawnSlots.map(s=>s.card.id).join(',');
-  if(allCardsFlipped()&&key&&key!==shownFor&&compactStage==='cards'){shownFor=key;play();}
+  if(allCardsFlipped()&&key&&key!==shownFor&&compactStage==='cards'){shownFor=key;if(selectedDeck==='joseon')play();}
   if(!appState.drawnSlots.length)shownFor='';
   return r;};
 });
