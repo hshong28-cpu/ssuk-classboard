@@ -99,3 +99,23 @@ body.compact-app{background:linear-gradient(#07050dcc,#0b0814f0),var(--parlour-a
 /* Step selector: a centred pill like the menu button */
 .app-select-wrap:has(#step-select){max-width:340px!important}
 #step-select{min-height:44px;text-align:center;text-align-last:center;padding:0 40px!important;border-radius:999px!important;color:#f0d9a4!important;background-color:#130e1a!important}
+/* ---- One-screen flow ---- */
+/* Answers clear away so the next question stands alone */
+#intake-story-log{display:none!important}
+/* When every card is chosen, the spread cloth leaves the table */
+#card-table-section.deck-done .deck-picker-wrap{display:none!important}
+#card-table-section.deck-done .spread-stage{animation:stage-rise .45s ease both}
+@keyframes stage-rise{from{opacity:.4;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#card-table-section.deck-done .spread-stage{animation:none}}
+/* Phones: once the deck is cleared, show all chosen cards side by side */
+@media (max-width:640px){
+ .compact-app .spread-stage:not(.single-slot){display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px!important;overflow:visible!important}
+ .compact-app .spread-stage:not(.single-slot)>.slot-unit{flex:none!important;max-width:none!important;width:100%}
+ .compact-app .spread-stage:not(.single-slot) .card-scene{width:100%!important;height:auto!important;aspect-ratio:140/245}
+ .compact-app .spread-stage:not(.single-slot) .tarot-card-btn,.compact-app .spread-stage:not(.single-slot) .card-empty-drop{width:100%!important;height:100%!important}
+ .compact-app .spread-stage:not(.single-slot) .slot-pos-title{font-size:13px}
+ .compact-app .spread-stage:not(.single-slot) .slot-pos-sub{display:none}
+ .compact-app .spread-stage:not(.single-slot) .slot-header{min-height:68px;display:flex;flex-direction:column;justify-content:flex-end}
+ .compact-app .spread-stage:not(.single-slot) .slot-pos-num{font-size:10px}
+ .compact-app .spread-stage:not(.single-slot) .card-face-back .step-code,.compact-app .spread-stage:not(.single-slot) .badge,.compact-app .spread-stage:not(.single-slot) .orientation-pill{font-size:10px}
+}
