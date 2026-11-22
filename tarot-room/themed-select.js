@@ -22,9 +22,10 @@
   const move=d=>{const it=items();let i=active;for(let n=0;n<it.length;n++){i=(i+d+it.length)%it.length;if(it[i].getAttribute('aria-disabled')!=='true'){setActive(i);return;}}};
   const place=()=>{const r=btn.getBoundingClientRect(),gap=6,below=innerHeight-r.bottom-gap-8,above=r.top-gap-8,want=Math.min(360,items().length*52+12),up=below<Math.min(want,220)&&above>below;
    list.style.left=Math.max(8,r.left)+'px';list.style.width=Math.min(r.width,innerWidth-16)+'px';list.style.maxHeight=Math.max(140,Math.min(want,up?above:below))+'px';
-   if(up){list.style.top='';list.style.bottom=(innerHeight-r.top+gap)+'px';}else{list.style.bottom='';list.style.top=(r.bottom+gap)+'px';}};
-  const show=()=>{if(btn.disabled)return;closeAll();build();document.body.append(list);list.classList.add('tsel-floating');list.hidden=false;box.classList.add('is-open');btn.setAttribute('aria-expanded','true');open.add(close);place();
-   addEventListener('resize',place);addEventListener('scroll',onScroll,true);
+   if(up){list.style.top='auto';list.style.bottom=(innerHeight-r.top+gap)+'px';}else{list.style.bottom='auto';list.style.top=(r.bottom+gap)+'px';}};
+  const inline=()=>!!box.closest('.menu-panel');
+  const show=()=>{if(btn.disabled)return;closeAll();build();if(!inline()){document.body.append(list);list.classList.add('tsel-floating');}else{list.classList.remove('tsel-floating');list.removeAttribute('style');}list.hidden=false;box.classList.add('is-open');btn.setAttribute('aria-expanded','true');open.add(close);if(!inline()){place();
+   addEventListener('resize',place);addEventListener('scroll',onScroll,true);}
    const cur=items().findIndex(li=>li.getAttribute('aria-selected')==='true');setActive(cur>=0?cur:items().findIndex(li=>li.getAttribute('aria-disabled')!=='true'));};
   const onScroll=e=>{if(e.target===list||list.contains(e.target))return;const r=btn.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)close();else place();};
   const close=()=>{removeEventListener('resize',place);removeEventListener('scroll',onScroll,true);list.hidden=true;box.append(list);box.classList.remove('is-open');btn.setAttribute('aria-expanded','false');btn.removeAttribute('aria-activedescendant');open.delete(close);};
