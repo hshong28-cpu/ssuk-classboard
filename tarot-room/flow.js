@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(full&&!wasFull){go(()=>document.getElementById('spread-stage')?.scrollIntoView({behavior:reduce()?'auto':'smooth',block:'center'}),350);}
   wasFull=full;
   clearTimeout(readingTimer);
-  if(full&&allCardsFlipped()&&compactStage==='cards')readingTimer=setTimeout(()=>{if(compactStage==='cards'&&allCardsFlipped())compactRead();},reduce()?300:1500);
+  if(full&&allCardsFlipped()&&compactStage==='cards'){const toReading=()=>{if(compactStage!=='cards'||!allCardsFlipped())return;if(document.body.classList.contains('viewer-open')){readingTimer=setTimeout(toReading,800);return;}compactRead();};readingTimer=setTimeout(toReading,reduce()?1600:2400);}
   return r;
  };
 });

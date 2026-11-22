@@ -146,3 +146,44 @@ body.compact-app{background:linear-gradient(#07050dcc,#0b0814f0),var(--parlour-a
 .step-back:focus-visible{outline:none;border-color:#f0d9a4;box-shadow:0 0 0 3px #e7c88d40}
 .step-back[hidden]{display:none!important}
 .restart-btn[data-armed="1"]{border-color:#e7c88d!important;color:#f0d9a4!important}
+/* ---- Chosen cards fill the table once the deck is cleared ---- */
+#card-table-section.deck-done .spread-stage:not(.single-slot){display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,2.5vw,28px)!important;max-width:min(100%,820px);margin-inline:auto!important;overflow:visible!important}
+#card-table-section.deck-done .spread-stage>.slot-unit{max-width:none!important;width:100%}
+#card-table-section.deck-done .spread-stage .card-scene{width:100%!important;height:auto!important;aspect-ratio:565/1000;max-height:62vh}
+#card-table-section.deck-done .spread-stage.single-slot .card-scene{width:min(68vw,300px)!important}
+#card-table-section.deck-done .tarot-card-btn,#card-table-section.deck-done .card-empty-drop{width:100%!important;height:100%!important}
+/* Turned card: the picture fills the card */
+#card-table-section.deck-done .tarot-card-btn.is-flipped{cursor:zoom-in}
+#card-table-section.deck-done .card-face-front{padding:0!important;border-radius:10px}
+#card-table-section.deck-done .card-face-front .card-anatomy-top,#card-table-section.deck-done .card-face-front .card-anatomy-bottom{display:none}
+#card-table-section.deck-done .card-face-front .card-anatomy-art{margin:0;height:100%}
+#card-table-section.deck-done .card-face-front .deck-front-image{object-fit:cover;border-radius:10px}
+.card-zoom-hint{text-align:center;font-size:13px;color:#d9bf8f;margin:-6px 0 10px}
+/* ---- Card viewer ---- */
+body.viewer-open{overflow:hidden}
+.card-viewer{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;padding:16px}
+.card-viewer[hidden]{display:none!important}
+.cv-backdrop{position:absolute;inset:0;background:#05030acc;backdrop-filter:blur(6px)}
+.cv-body{position:relative;display:grid;grid-template-columns:auto minmax(0,340px);gap:24px;align-items:center;max-width:min(960px,100%);max-height:100%;padding:22px;border-radius:18px;background:#140e1bf2;border:1px solid #c9a46a55;box-shadow:0 30px 80px #000a;overflow:auto}
+.cv-media img{display:block;height:min(78vh,720px);width:auto;max-width:100%;aspect-ratio:565/1000;object-fit:contain;border-radius:12px;box-shadow:0 14px 40px #000b;transition:transform .35s ease}
+.cv-media img.is-reversed{transform:rotate(180deg)}
+.cv-close{position:absolute;top:8px;right:10px;width:40px;height:40px;border-radius:50%;border:1px solid #c9a46a4d;background:#1a1324;color:#f0d9a4;font-size:24px;line-height:1;cursor:pointer;z-index:1}
+.cv-info h3{margin:2px 0 0;font-family:var(--font-headline);font-size:26px;color:#f3dfbc;font-weight:500}
+.cv-pos{margin:0;font-size:13px;color:#d9bf8f;letter-spacing:.04em}
+.cv-en{margin:2px 0 10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#b9a9c2}
+.cv-dir{display:inline-block;margin:0 0 10px;padding:3px 10px;border-radius:999px;font-size:12px}
+.cv-dir.up{background:#52d19c1f;color:#8fe3bf}.cv-dir.rev{background:#e07a5f22;color:#f0a58f}
+.cv-kw{margin:0 0 10px;font-size:14px;color:#efe3cf;line-height:1.8}
+.cv-note{margin:0 0 14px;font-size:13px;color:#cbbfd2;line-height:1.75}
+.cv-nav{display:flex;flex-wrap:wrap;gap:8px}
+.cv-nav .btn{font-size:13px;min-height:40px}
+@media (max-width:720px){.cv-body{grid-template-columns:1fr;justify-items:center;gap:14px;padding:16px;max-height:calc(100dvh - 32px)}.cv-media img{height:min(56vh,520px)}.cv-info{text-align:center}.cv-nav{justify-content:center}.cv-info h3{font-size:22px}}
+/* ---- Chosen cards at the top of the reading ---- */
+.reading-cards{display:flex;justify-content:center;gap:clamp(8px,2vw,18px);margin:16px 0 4px}
+.reading-cards[hidden]{display:none}
+.reading-cards .rc{display:grid;justify-items:center;gap:6px;width:clamp(84px,24vw,150px);padding:0;border:0;background:none;color:inherit;cursor:zoom-in}
+.reading-cards .rc img{width:100%;aspect-ratio:565/1000;object-fit:cover;border-radius:8px;border:1px solid #c9a46a55;box-shadow:0 8px 20px #0008;transition:transform .2s}
+.reading-cards .rc img.is-reversed{transform:rotate(180deg)}
+.reading-cards .rc:hover img{transform:translateY(-4px)}.reading-cards .rc:hover img.is-reversed{transform:rotate(180deg) translateY(4px)}
+.reading-cards .rc:focus-visible{outline:none}.reading-cards .rc:focus-visible img{box-shadow:0 0 0 3px #e7c88d88}
+.rc-pos{font-size:11px;color:#d9bf8f}.rc-name{font-size:13px;color:#f1e4cc}
