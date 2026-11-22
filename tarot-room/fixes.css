@@ -119,3 +119,29 @@ body.compact-app{background:linear-gradient(#07050dcc,#0b0814f0),var(--parlour-a
  .compact-app .spread-stage:not(.single-slot) .slot-pos-num{font-size:10px}
  .compact-app .spread-stage:not(.single-slot) .card-face-back .step-code,.compact-app .spread-stage:not(.single-slot) .badge,.compact-app .spread-stage:not(.single-slot) .orientation-pill{font-size:10px}
 }
+/* ---- Shuffle ritual ---- */
+.deck-picker-wrap.ritual-on .physical-controls,.deck-picker-wrap.ritual-on .physical-deck-scroll{display:none!important}
+.shuffle-ritual{display:grid;justify-items:center;gap:14px;padding:26px 16px 30px;text-align:center;border-radius:20px;background:radial-gradient(ellipse at 50% 30%,#3a2a4f55,transparent 70%),#110c18;border:1px solid #c9a46a33}
+.ritual-deck{position:relative;width:96px;height:158px;margin:8px 0 6px}
+.ritual-deck .rd{position:absolute;inset:0;border-radius:8px;background-size:cover;background-position:center;box-shadow:0 8px 18px #0008;border:1px solid #d1ad7766}
+.ritual-deck .l2{transform:translate(-4px,4px) rotate(-3deg)}.ritual-deck .r2{transform:translate(4px,3px) rotate(3deg)}
+.ritual-deck .l{transform:translate(-2px,2px) rotate(-1.5deg)}.ritual-deck .r{transform:translate(2px,1px) rotate(1.5deg)}
+.shuffle-ritual.is-shuffling .rd.l,.shuffle-ritual.is-shuffling .rd.l2{animation:riffle-l .62s ease-in-out infinite}
+.shuffle-ritual.is-shuffling .rd.r,.shuffle-ritual.is-shuffling .rd.r2{animation:riffle-r .62s ease-in-out infinite}
+.shuffle-ritual.is-shuffling .rd.l2,.shuffle-ritual.is-shuffling .rd.r2{animation-delay:.08s}
+.shuffle-ritual.is-shuffling .rd.top{animation:riffle-top .62s ease-in-out infinite}
+@keyframes riffle-l{0%,100%{transform:translate(0,0) rotate(0)}40%{transform:translate(-64px,6px) rotate(-14deg)}70%{transform:translate(-8px,-2px) rotate(-2deg)}}
+@keyframes riffle-r{0%,100%{transform:translate(0,0) rotate(0)}40%{transform:translate(64px,6px) rotate(14deg)}70%{transform:translate(8px,-2px) rotate(2deg)}}
+@keyframes riffle-top{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.shuffle-ritual.is-shuffling .ritual-deck{filter:drop-shadow(0 0 18px #e7c88d55)}
+.ritual-question{margin:0;max-width:34ch;font-family:var(--font-headline);font-size:16px;line-height:1.7;color:#f1d9ad}
+.ritual-guide{margin:0;font-size:14px;color:#d2c3d8;min-height:1.6em}
+.ritual-btn{min-width:240px;min-height:50px!important;font-size:16px!important}
+@media (prefers-reduced-motion:reduce){.shuffle-ritual.is-shuffling .rd{animation:none!important}}
+/* ---- Step back button ---- */
+.app-select-wrap.has-back{display:flex!important;align-items:center;gap:8px;max-width:440px!important}
+.app-select-wrap.has-back>.app-select{flex:1}
+.step-back{flex:none;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #c9a46a4d;background:#130e1a;color:#e9d5b2;font-size:14px;cursor:pointer;white-space:nowrap}
+.step-back:hover{border-color:#e7c88d99}
+.step-back:focus-visible{outline:none;border-color:#f0d9a4;box-shadow:0 0 0 3px #e7c88d40}
+.step-back[hidden]{display:none!important}
