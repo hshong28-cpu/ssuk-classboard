@@ -22,18 +22,10 @@
 .compact-settings .disclosure-hint{font-size:11px}
 .topic-first .intake-topic-grid[hidden]{display:none!important}
 /* Topic dropdown */
-.intake-topic-select{display:block;width:100%;margin:14px 0 18px;min-height:56px;padding:0 48px 0 18px;border-radius:11px;border:1px solid #b99565aa;background:#261b32 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23e7c88d' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 18px center;color:#f0e5d8;font-size:16px;font-family:inherit;appearance:none;-webkit-appearance:none;cursor:pointer}
-.intake-topic-select:hover{border-color:#e7c88d}
-.intake-topic-select:focus-visible{outline:3px solid #f0d9a4;outline-offset:3px}
-.intake-topic-select option{background:#1d1627;color:#f0e5d8}
 /* Shared dropdown style for every choice */
 .dd-hidden{display:none!important}
 .app-select-wrap{display:grid;gap:6px;margin:10px 0;min-width:0}
 .app-select-label{font-size:13px;color:#d2ba91}
-.app-select{display:block;width:100%;min-height:48px;padding:0 44px 0 14px;border-radius:10px;border:1px solid #b99565aa;background:#261b32 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23e7c88d' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 16px center;color:#f0e5d8;font-size:15px;font-family:inherit;appearance:none;-webkit-appearance:none;cursor:pointer;text-overflow:ellipsis}
-.app-select:hover{border-color:#e7c88d}
-.app-select:focus-visible{outline:3px solid #f0d9a4;outline-offset:3px}
-.app-select option{background:#1d1627;color:#f0e5d8}
 .hero-header .app-select-wrap{margin:0;grid-template-columns:auto minmax(130px,180px);align-items:center;gap:8px}
 .hero-header .app-select{min-height:42px;font-size:14px}
 @media (max-width:640px){.hero-header .app-select-wrap{grid-template-columns:auto 1fr;width:100%}}
@@ -81,7 +73,6 @@
 body.compact-app{background:linear-gradient(#07050dcc,#0b0814f0),var(--parlour-art) center/cover fixed!important}
 @media (max-width:640px){body.compact-app{background-attachment:scroll!important}}
 .compact-app .hero-header{background:#0d0a15e6!important}
-.app-select,.intake-topic-select{background-color:#1a1324!important}
 .compact-app .observation-well{background:linear-gradient(#0c0811ee,#09060ff2),var(--parlour-art) center 75%/cover!important}
 .compact-app [aria-labelledby=setup-heading],.compact-app .conversation-room,.compact-app .studio-panel{background:#120d19f2!important}
 @media (prefers-reduced-motion:reduce){#deck-fan.rows-spread.laying-cards .fan-card{animation:none!important}}
@@ -98,7 +89,6 @@ body.compact-app{background:linear-gradient(#07050dcc,#0b0814f0),var(--parlour-a
 .app-select-label,label[for=intake-topic-select]{color:#d9bf8f!important;font-size:12.5px!important;letter-spacing:.04em}
 /* Step selector: a centred pill like the menu button */
 .app-select-wrap:has(#step-select){max-width:340px!important}
-#step-select{min-height:44px;text-align:center;text-align-last:center;padding:0 40px!important;border-radius:999px!important;color:#f0d9a4!important;background-color:#130e1a!important}
 /* ---- One-screen flow ---- */
 /* Answers clear away so the next question stands alone */
 #intake-story-log{display:none!important}
@@ -187,3 +177,15 @@ body.viewer-open{overflow:hidden}
 .reading-cards .rc:hover img{transform:translateY(-4px)}.reading-cards .rc:hover img.is-reversed{transform:rotate(180deg) translateY(4px)}
 .reading-cards .rc:focus-visible{outline:none}.reading-cards .rc:focus-visible img{box-shadow:0 0 0 3px #e7c88d88}
 .rc-pos{font-size:11px;color:#d9bf8f}.rc-name{font-size:13px;color:#f1e4cc}
+
+/* ---- Dropdowns: one style everywhere (plum like the panels, antique brass like the mapae) ---- */
+.app-select,.intake-topic-select{display:block;width:100%;min-height:50px;padding:0 46px 0 16px;appearance:none;-webkit-appearance:none;cursor:pointer;font-family:inherit;font-size:15px;font-weight:500;letter-spacing:.01em;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23d4b27a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 18px center,linear-gradient(180deg,#1e1629,#150f1d)!important;
+ border:1px solid #c9a46a55!important;border-radius:12px!important;color:#efe2c8!important;box-shadow:inset 0 1px 0 #f3dcae12,0 6px 16px #0004!important;transition:border-color .15s,box-shadow .15s}
+.intake-topic-select{min-height:56px;margin:14px 0 18px;padding-left:18px;font-size:16px}
+.hero-header .app-select{min-height:42px;font-size:14px}
+#step-select{min-height:44px;border-radius:999px!important;text-align:center;text-align-last:center;padding:0 40px!important}
+.app-select:hover,.intake-topic-select:hover{border-color:#d4b27a99!important}
+.app-select:focus-visible,.intake-topic-select:focus-visible{outline:none!important;border-color:#e3c48c!important;box-shadow:0 0 0 3px #d4b27a40,0 6px 16px #0004!important}
+.app-select option,.intake-topic-select option{background:#17111f;color:#efe2c8}
+.step-back{background:linear-gradient(180deg,#1e1629,#150f1d)!important;border-color:#c9a46a55!important;color:#efe2c8!important}
