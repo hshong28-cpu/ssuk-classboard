@@ -145,3 +145,4 @@ body.compact-app{background:linear-gradient(#07050dcc,#0b0814f0),var(--parlour-a
 .step-back:hover{border-color:#e7c88d99}
 .step-back:focus-visible{outline:none;border-color:#f0d9a4;box-shadow:0 0 0 3px #e7c88d40}
 .step-back[hidden]{display:none!important}
+.restart-btn[data-armed="1"]{border-color:#e7c88d!important;color:#f0d9a4!important}
